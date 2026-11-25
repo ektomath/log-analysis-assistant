@@ -1,7 +1,7 @@
 services:
   postgres:
     # Official Postgres image with the pgvector extension pre-installed
-    image: pgvector/pgvector:pg17
+    image: pgvector/pgvector:0.8.7-pg17
     container_name: log-assistant-postgres
     restart: unless-stopped
     environment:
