@@ -1,0 +1,26 @@
+services:
+  postgres:
+    # Official Postgres image with the pgvector extension pre-installed
+    image: pgvector/pgvector:0.8.7-pg17
+    container_name: log-assistant-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env (copy .env.example)}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      # host:container. Change POSTGRES_PORT in .env if 5432 is already taken on your machine.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # Named volume: data survives `docker compose down` (but not `down -v`)
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts in this folder run once, the first time the volume is created
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

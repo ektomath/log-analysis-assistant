@@ -25,6 +25,41 @@ The project builds a local assistant that ingests real system logs, makes them s
 | Orchestration | Kubernetes (kind or minikube) and Helm |
 | CI | GitHub Actions |
 
+## Getting started
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (on Windows, with the WSL 2 backend)
+
+### Start the database
+
+```bash
+cp .env.example .env        # PowerShell: Copy-Item .env.example .env
+docker compose up -d
+docker compose ps           # wait until postgres shows "healthy"
+```
+
+### Connect with psql
+
+```bash
+docker compose exec postgres psql -U loguser -d logs
+```
+
+Check that pgvector is enabled:
+
+```sql
+SELECT extname, extversion FROM pg_extension WHERE extname = 'vector';
+```
+
+### Stop
+
+```bash
+docker compose down         # stop containers, keep data
+docker compose down -v      # stop and delete all data
+```
+
+The init scripts in `db/init/` only run when the data volume is first created. After changing them, reset with `docker compose down -v`.
+
 ## Plan
 
 ### Week 1: Docker and the data pipeline
