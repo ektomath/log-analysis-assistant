@@ -20,23 +20,23 @@ Start from an up-to-date `main`:
 ```bash
 git switch main
 git pull
-git switch -c feat/12-airflow-dag
+git switch -c feature/12-airflow-dag
 ```
 
 Branch names use `<type>/<issue-number>-<short-description>`:
 
 | Type | Use for |
 | --- | --- |
-| `feat` | New functionality |
+| `feature` | New functionality |
 | `fix` | Bug fixes |
-| `chore` | Tooling, config, dependencies |
+| `setup` | Project setup: tooling, config, CI, Docker, dependencies |
 | `docs` | Documentation only |
 | `test` | Adding or fixing tests |
 | `refactor` | Code changes that don't change behaviour |
 
 ## 4. Write clear commits
 
-Use [Conventional Commits](https://www.conventionalcommits.org/):
+Use [Conventional Commits](https://www.conventionalcommits.org/). Commit types match the branch types, except that commits use the short standard form `feat:` for features:
 
 ```
 feat: add HDFS log parser
@@ -53,7 +53,7 @@ Refs #12
 ## 5. Open a pull request
 
 ```bash
-git push -u origin feat/12-airflow-dag
+git push -u origin feature/12-airflow-dag
 ```
 
 Then open a PR on GitHub. The PR template asks for **what**, **why** and **how it was tested**. Put `Closes #12` in the description so the issue closes automatically on merge.
