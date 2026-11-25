@@ -10,7 +10,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       # host:container. Change POSTGRES_PORT in .env if 5432 is already taken on your machine.
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       # Named volume: data survives `docker compose down` (but not `down -v`)
       - postgres_data:/var/lib/postgresql/data
